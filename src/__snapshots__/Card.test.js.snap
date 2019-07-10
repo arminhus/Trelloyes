@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card component test should match the snapshot for Card 1`] = `
+<div
+  className="Card"
+>
+  <button
+    type="button"
+  >
+    delete
+  </button>
+  <h3 />
+  <p />
+</div>
+`;
+
+exports[`Card component test should render card first card in first list 1`] = `
+<div
+  className="Card"
+>
+  <button
+    type="button"
+  >
+    delete
+  </button>
+  <h3>
+    first card
+  </h3>
+  <p>
+    lorem ipsum
+  </p>
+</div>
+`;
