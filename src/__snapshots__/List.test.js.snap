@@ -25,6 +25,7 @@ exports[`List component test should match the snapshot for List 1`] = `
     </div>
     <button
       className="List-add-button"
+      onClick={[Function]}
       type="button"
     >
       + Add Random Card
