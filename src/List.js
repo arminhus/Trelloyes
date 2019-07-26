@@ -10,7 +10,12 @@ let List = props => {
       </header>
       <div className="List-cards">
         {props.cards.map(card => (
-          <Card key={card.id} title={card.title} content={card.content} />
+          <Card
+            key={card.id}
+            title={card.title}
+            content={card.content}
+            cardDelete={() => props.cardDelete(card.id)}
+          />
         ))}
         <button
           onClick={props.onClickAdd}
