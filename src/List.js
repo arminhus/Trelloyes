@@ -2,6 +2,9 @@ import React from "react";
 import Card from "./Card";
 import "./List.css";
 
+// find the cards..
+// find the card..
+// delete the card.
 let List = props => {
   return (
     <section className="List">
