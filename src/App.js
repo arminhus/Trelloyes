@@ -19,15 +19,13 @@ const newRandomCard = () => {
 };
 
 function omit(obj, keyToOmit) {
-  return Object.entries(obj).reduce(
-    (newObj, [key, value]) =>
-      key === keyToOmit
-        ? newObj
-        : {
-            ...newObj,
-            [key]: value
-          },
-    {}
+  return Object.entries(obj).reduce((newObj, [key, value]) =>
+    key === keyToOmit
+      ? newObj
+      : {
+          ...newObj,
+          [key]: value
+        }
   );
 }
 
@@ -43,31 +41,39 @@ class App extends Component {
     store: STORE
   };
 
-  handleDeleteCard = (id, list) => {
-    console.log(id, list);
-    // console.log("hello", id);
-    // find the array that needs to be filtered
-    // inside the list of this cards
+  handleDeleteCard = (_cardId, _list) => {
     const { lists, allCards } = this.state.store;
-    // find the list..
-    // find its cards..
-    // find the card.
-    // const myList =
-    lists.map(list => {
-      // each list is mapped through
-      // console.log(list);
-      // each cardIds in each list will be filtered.
-      // console.log(listß.cardIds.filter(selected => selected !== id));
+    let selectedObject = lists.find(list => {
+      if (list.id === _list.id) {
+        return list;
+      }
     });
+    const filteredCardIds = selectedObject.cardIds.filter(cardId => {
+      if (cardId !== _cardId) {
+        return cardId;
+      }
+    });
+    selectedObject.cardIds = filteredCardIds;
+
     // delete the card.
+    this.setState({
+      store: {
+        lists: this.state.store.lists.map(newList => {
+          if (newList.id === _list.id) {
+            return selectedObject;
+          }
+          return newList;
+        }),
+        allCards: this.state.store.allCards
+      }
+    });
   };
 
   handleAddCard = listId => {
-    // console.log(listId);
     const { lists, allCards } = this.state.store;
     const newCard = newRandomCard();
     let myList = lists.map(list => {
-      if (listId == list.id) {
+      if (listId === list.id) {
         return {
           ...list,
           cardIds: [...list.cardIds, newCard.id]
@@ -75,12 +81,11 @@ class App extends Component {
       }
       return list;
     });
-    console.log("my list", myList);
     this.setState({
       store: {
         lists: myList,
         allCards: {
-          ...allCards,
+          ...this.state.store.allCards,
           [newCard.id]: newCard
         }
       }
@@ -96,14 +101,12 @@ class App extends Component {
         </header>
         <div className="App-list">
           {store.lists.map(list => {
-            {
-              /* console.log("list console in map", list); */
-            }
             return (
               <List
                 key={list.id}
                 header={list.header}
-                cards={list.cardIds.map(id => store.allCards[id])}
+                allCards={store.allCards}
+                cards={list.cardIds}
                 onClickAdd={() => this.handleAddCard(list.id)}
                 cardDelete={id => this.handleDeleteCard(id, list)}
               />
